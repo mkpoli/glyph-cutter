@@ -84,6 +84,6 @@ def test_boxes_maps_a_tile_detection_to_the_page():
 
 def test_inked_drops_a_box_with_no_ink():
     page = Image.new("RGB", (100, 100), "white")
-    assert detect.inked(page, [Box(10, 10, 20, 20)], share=0.4) == [True]
+    assert detect.inked(page, [Box(10, 10, 20, 20)], share=0.4) == [False]
     page.paste((0, 0, 0), (42, 42, 48, 58))
     assert detect.inked(page, [Box(10, 10, 20, 20), Box(40, 40, 20, 20)], share=0.4) == [False, True]

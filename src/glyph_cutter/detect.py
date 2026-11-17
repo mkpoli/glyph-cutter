@@ -109,7 +109,11 @@ def box_ink(grey: np.ndarray, box: Box) -> float:
 
 
 def inked(page: Image.Image, boxes: Sequence[Box], share: float = INK) -> list[bool]:
-    """Whether each box holds at least `share` of the page's typical ink."""
+    """Whether each box holds at least `share` of the page's typical ink.
+
+    On a page where every box holds no ink, blank paper gives zero for the typical box; a box then
+    stands only when it holds some ink at all.
+    """
     if not boxes or share <= 0:
         return [True] * len(boxes)
     from PIL import ImageFilter
@@ -117,6 +121,9 @@ def inked(page: Image.Image, boxes: Sequence[Box], share: float = INK) -> list[b
     grey = np.asarray(page.convert("L").filter(ImageFilter.MedianFilter(3)), dtype=np.float32)
     values = [box_ink(grey, box) for box in boxes]
     typical = float(np.percentile(values, INK_REFERENCE))
+    if typical <= 0:
+        # A page whose boxes hold no ink at all is blank or uniform; only a box with some ink stands.
+        return [value > 0 for value in values]
     return [value >= share * typical for value in values]
 
 
