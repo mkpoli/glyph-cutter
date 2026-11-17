@@ -45,5 +45,7 @@ box and the square actually cut.
 ## What it does not do
 
 It does not read the characters. A crop is one character only when the detector and the cutter are
-right; the manifest does not carry a transcription. It does not remove ruby, punctuation or
-decoration that the detector may have boxed, and it does not segment a page into text blocks.
+right; the manifest does not carry a transcription. It does not parse ruby, interlinear notes or
+column markers in a transcription: every non-space character becomes a token. It does not remove
+punctuation or decoration that the detector may have boxed, and it does not segment a page into text
+blocks.
