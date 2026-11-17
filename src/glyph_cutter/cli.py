@@ -50,7 +50,7 @@ def fetch_models(
     models_dir: Annotated[
         Path | None, typer.Option("--models", help="directory to put the model files in")
     ] = None,
-    force: Annotated[bool, typer.Option(help="download every file again")] = False,
+    force: Annotated[bool, typer.Option("--force/--no-force", help="download every file again")] = False,
 ) -> None:
     """Download the detector, classifier and cutter models."""
     target = (models_dir or models.default_directory()).expanduser()
@@ -75,7 +75,9 @@ def cut_book(
     models_dir: Annotated[
         Path | None, typer.Option("--models", help="directory holding the model files")
     ] = None,
-    fetch: Annotated[bool, typer.Option("--fetch", help="download missing model files")] = False,
+    fetch: Annotated[
+        bool, typer.Option("--fetch/--no-fetch", help="download missing model files")
+    ] = False,
     dpi: Annotated[int, typer.Option(min=72, max=1200, help="PDF rendering resolution")] = 300,
     pages: Annotated[str | None, typer.Option(help="pages to read, e.g. 1-5,8")] = None,
     max_pages: Annotated[int | None, typer.Option(help="stop after this many pages")] = None,
