@@ -18,7 +18,8 @@ because this tool ships no box refiner. The fit used 47,755 candidate boxes, 24,
 character, from 1,187 validation lines of CODH books and 9,253 reviewed lines. The gate accepted at
 0.9655, the threshold that gave 98.5% precision on faulted validation: on CODH's four held-out test
 books it places 83.8% of 44,194 characters at IoU 0.7 or better, accepts 19,361 boxes, and 97.6% of
-the accepted boxes are cut right. The training scripts and the original measurements live in Glyph
+the accepted boxes are cut right. On 269 held-out reviewed crops it accepts 225, 99.1% of them cut
+right. The training scripts and the original measurements live in Glyph
 Atlas (`models/detector`, `models/classifier`, `models/cutter`).
 
 ## Training data
