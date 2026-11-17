@@ -95,6 +95,12 @@ crops/book/
 `box` is the detected character, `[x, y, w, h]`; `crop` is the square actually cut, `[x, y, side]`.
 `run.json` records the options, model checksums and crop count of the run.
 
+## How it works
+
+[The pipeline](docs/how-it-works.md) describes the tiling, the segmenter, the lattice and the crop
+geometry. The short version: an RT-DETR detector finds character boxes, a small framing model cuts a
+page without a transcription, and a second model accepts transcribed placements.
+
 ## Models
 
 `glyph-cutter fetch` writes five files to `~/.cache/glyph-cutter/models` (or `$GLYPH_CUTTER_MODELS`):
