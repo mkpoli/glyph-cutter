@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+message: "If you use glyph-cutter, cite the tool; MODELS.md cites the datasets behind its weights."
+title: glyph-cutter
+abstract: Cut square character crops out of scanned classical books.
+type: software
+license: MIT
+authors:
+  - name: mkpoli
+repository-code: https://github.com/mkpoli/glyph-cutter
+keywords:
+  - kuzushiji
+  - hanzi
+  - CJK
+  - character detection
+  - paleography
