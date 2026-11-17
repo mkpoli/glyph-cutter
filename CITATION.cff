@@ -3,6 +3,8 @@ message: "If you use glyph-cutter, cite the tool; MODELS.md cites the datasets b
 title: glyph-cutter
 abstract: Cut square character crops out of scanned classical books.
 type: software
+version: 0.1.0
+date-released: 2026-11-17
 license: MIT
 authors:
   - name: mkpoli
