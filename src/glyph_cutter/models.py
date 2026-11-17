@@ -71,7 +71,7 @@ def verified(directory: Path) -> list[str]:
     return bad
 
 
-def _download(name: str, directory: Path, progress: Callable[[int, int], None] | None) -> Path:
+def _download(name: str, directory: Path, progress: Callable[[str, int, int], None] | None) -> Path:
     url = f"{RELEASE}/{name}"
     target = directory / name
     partial = directory / f"{name}.part"
@@ -87,7 +87,7 @@ def _download(name: str, directory: Path, progress: Callable[[int, int], None] |
             handle.write(block)
             read += len(block)
             if progress is not None:
-                progress(read, total)
+                progress(name, read, total)
     if digest(partial) != FILES[name]["sha256"]:
         partial.unlink(missing_ok=True)
         raise RuntimeError(f"{url}: the download does not match its SHA-256")
@@ -100,7 +100,7 @@ def ensure(
     *,
     download: bool = False,
     force: bool = False,
-    progress: Callable[[int, int], None] | None = None,
+    progress: Callable[[str, int, int], None] | None = None,
 ) -> Path:
     """The model directory, downloading every missing file when `download` is true."""
     directory = (directory or default_directory()).expanduser()
@@ -142,10 +142,10 @@ def index() -> str:
     return json.dumps({"release": RELEASE, "files": FILES}, indent=2)
 
 
-def progress_to_stderr(name: str):
+def progress_to_stderr() -> Callable[[str, int, int], None]:
     """A simple progress reporter for the download."""
 
-    def report(read: int, total: int) -> None:
+    def report(name: str, read: int, total: int) -> None:
         if total:
             share = read / total
             print(

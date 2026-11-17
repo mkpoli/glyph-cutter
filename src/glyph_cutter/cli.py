@@ -38,7 +38,7 @@ def _model_directory(directory: Path | None, fetch: bool) -> Path:
         return models.ensure(
             directory,
             download=fetch,
-            progress=models.progress_to_stderr if fetch else None,
+            progress=models.progress_to_stderr() if fetch else None,
         )
     except (FileNotFoundError, RuntimeError) as error:
         typer.echo(str(error), err=True)
@@ -55,7 +55,7 @@ def fetch_models(
     """Download the detector, classifier and cutter models."""
     target = (models_dir or models.default_directory()).expanduser()
     try:
-        models.ensure(target, download=True, force=force, progress=models.progress_to_stderr)
+        models.ensure(target, download=True, force=force, progress=models.progress_to_stderr())
     except RuntimeError as error:
         typer.echo(str(error), err=True)
         raise typer.Exit(1) from error
