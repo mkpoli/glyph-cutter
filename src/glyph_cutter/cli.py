@@ -120,8 +120,17 @@ def cut_book(
     providers = _providers(device)
     started = time.time()
     typer.echo(f"models     {directory}")
-    detector = Detector(directory / "detector.onnx", score=score, nms=nms, providers=providers)
-    classifier = Classifier(directory / "classifier.onnx", providers=providers)
+    try:
+        detector = Detector(directory / "detector.onnx", score=score, nms=nms, providers=providers)
+        classifier = Classifier(directory / "classifier.onnx", providers=providers)
+    except ModuleNotFoundError as error:
+        if error.name and error.name.startswith("onnxruntime"):
+            typer.echo(
+                "onnxruntime is not installed; install glyph-cutter[cpu] or glyph-cutter[gpu]",
+                err=True,
+            )
+            raise typer.Exit(1) from error
+        raise
     cutter = Cutter(directory)
     typer.echo(f"detector   {', '.join(detector.providers())}")
     typer.echo(f"classifier {', '.join(classifier.providers())}")
