@@ -28,7 +28,9 @@ def ink_map(image) -> np.ndarray:
     small = cv2.resize(
         grey, (grey.shape[1] // scale, grey.shape[0] // scale), interpolation=cv2.INTER_AREA
     )
-    paper = cv2.medianBlur(small, 31)
+    side = min(small.shape[:2])
+    ksize = min(31, side if side % 2 else side - 1)
+    paper = cv2.medianBlur(small, max(3, ksize))
     paper = cv2.resize(paper, (grey.shape[1], grey.shape[0]), interpolation=cv2.INTER_LINEAR).astype(
         np.float32
     )
